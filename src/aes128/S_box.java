@@ -16,7 +16,7 @@ public class S_box {
 //    The code is retrieving the value of the bit at index i in byte b.
     private int get_bit(byte b, int i) {
         int bit = (int) ((b >> i) & 0x1);
-        System.out.println(bit);
+//        System.out.println(bit);
         return bit;
     }
 
@@ -184,7 +184,7 @@ public class S_box {
         return result;
     }
 
-    //get the multiplicative inverse in the finite field GF(28)
+    //get the multiplicative inverse in the finite field GF(2^8)
     // m(x) = x^8 + x^4 + x^3 + x + 1   {01}{1b}  0000 0001 0001 1011  irreducible polynomial
     // gcd(bits(x),m(x) = 1 using extended Euclidean algorithm
     // The code above is responsible for calculating the inverse of an array 
@@ -196,7 +196,6 @@ public class S_box {
         int[] q = new int[16];
         int[][] v = new int[3][16];
         int[][] w = new int[3][16];
-
         int[] terminator = new int[16];
 
         r[0] = irreducible.clone();
@@ -255,6 +254,7 @@ public class S_box {
             converted[i] = bits[i] ^ bits[(i + 4) % 8] ^ bits[(i + 5) % 8] ^ bits[(i + 6) % 8] ^ bits[(i + 7) % 8] ^ c[i];
             result = result + converted[i] * exp;
             exp = exp * 2;
+//            System.out.println("result for " + i + " is = " + result);
         }
 //        System.out.println("Converted = " + result);
         return result;
@@ -291,18 +291,23 @@ public class S_box {
                 } else {
                     byte data = (byte) ((i << 4) + j);
                     bits = get_inverse(byte_to_intarry(data));
-                    if (i == 9 && j == 5) {
-                        System.out.println("data = " + data);
-                        System.out.println("intger array = " + data + " = " + Arrays.toString(byte_to_intarry(data)));
-                        System.out.println("Inversed byte data = " + Arrays.toString(bits));
-                    }
+
+//                    if (i == 9 && j == 5) {
+//                        System.out.println("");
+//                        System.out.println("data = " + data);
+//                        System.out.println("intger array = " + data + " = " + Arrays.toString(byte_to_intarry(data)));
+//                        System.out.println("Inversed byte data = " + Arrays.toString(bits));
+//                    }
                 }
+//                System.out.println("i = " + i + " & j = " + j + " with converted = " + convert(bits) + " & with value = " + Arrays.toString(bits));
                 s_box[i][j] = convert(bits);
-                String string = String.format("%02X", s_box[i][j]);
-                if (i == 9 && j == 5) {
-                    System.out.println("converted bits = " + s_box[i][j]);
-                    System.out.println("hexa = " + string + " ");
-                }
+//                String string = String.format("%02X", s_box[i][j]);
+//                System.out.print(string + " ");
+
+//                if (i == 9 && j == 5) {
+//                    System.out.println("converted bits = " + s_box[i][j]);
+//                    System.out.println("hexa = " + string + " ");
+//                }
             }
 //            System.out.println();
         }
@@ -364,12 +369,16 @@ public class S_box {
 
         S_box s_box = new S_box();
         s_box.generate();
-        for (int i = 0; i < 16; i++) {
-            System.out.println(Arrays.toString(s_box.s_box[i]));
-        }
-        System.out.println(s_box.get_bit((byte)9, 5));
-//        s_box.generate_one_dime();
-//        s_box.generate_inverse_one_dime();
+//        for (int i = 0; i < 16; i++) {
+//           for(int j=0;j<16;j++){
+//               String string = String.format("%02X", s_box.s_box[i][j]);
+//               System.out.print(string+" ");
+//           }
+//            System.out.println("");
+//        }
+//        String string = String.format("%02X", s_box.s_box[4][5]);
+//        System.out.print(string + " ");
+
         System.out.println("Done!");
 
     }
